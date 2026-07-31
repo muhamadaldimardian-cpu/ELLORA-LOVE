@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ELLORA CALLISTA ❤️</title>
+    <style>
+        /* Gaya dasar halaman */
+        body {
+            background: #ffb6c1; /* Warna pink dari kodemu */
+            text-align: center;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            overflow: hidden; /* Mencegah layar bisa digeser saat hujan hati */
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* Menyembunyikan elemen */
+        .hidden {
+            display: none !important;
+        }
+
+        /* Gaya Tombol */
+        .btn {
+            background: #ff4d6d;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            font-size: 18px;
+            border-radius: 20px;
+            cursor: pointer;
+            margin-top: 20px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+            transition: 0.2s;
+        }
+        .btn:hover {
+            background: #d6336c;
+            transform: scale(1.05);
+        }
+
+        /* Gaya Kotak Pesan */
+        .msg-box {
+            background: rgba(255, 255, 255, 0.7);
+            padding: 20px;
+            border-radius: 15px;
+            text-align: left;
+            max-width: 500px;
+            height: 300px;
+            overflow-y: auto;
+            line-height: 1.6;
+            margin-top: 20px;
+            font-size: 16px;
+            color: #333;
+        }
+
+        /* Dekorasi Gambar/Emoji */
+        .emojis {
+            font-size: 40px;
+            margin-bottom: 10px;
+        }
+
+        /* Efek Hujan Hati */
+        .heart {
+            position: absolute;
+            color: red;
+            font-size: 20px;
+            animation: fall linear forwards;
+            z-index: 999;
+        }
+        @keyframes fall {
+            0% { transform: translateY(-50px); opacity: 1; }
+            100% { transform: translateY(100vh); opacity: 0; }
+        }
+
+        /* Teks Kejutan Akhir */
+        #surpriseText {
+            color: #d6336c;
+            text-shadow: 2px 2px 5px white;
+            font-size: 28px;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Musik Latar (Ganti URL dengan link mp3 yang kamu inginkan) -->
+    <audio id="bgm" src="https://www.soundhelix.com/architecture/mp3-player?mp3=https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" loop></audio>
+
+    <!-- BAGIAN 1: HALAMAN PEMBUKA -->
+    <div id="screen1">
+        <h1>💖 ELLORA CALLISTA SAYANG KUUU 💖</h1>
+        <p>🌌 💞 💗 🌹 ✨ 📸</p>
+        <button class="btn" onclick="mulai()">Mulai ✨</button>
+    </div>
+
+    <!-- BAGIAN 2: COUNTDOWN (Dari kodemu yang dimodifikasi) -->
+    <div id="screen2" class="hidden">
+        <h1>💖 ELLORA CALLISTA SAYANG KUUU 💖</h1>
+        <h2 id="timer" style="font-size: 60px; color: #d6336c;">30</h2>
+        <p>Tunggu ya sayang... ❤️</p>
+    </div>
+
+    <!-- BAGIAN 3: PESAN ROMANTIS & KEJUTAN -->
+    <div id="screen3" class="hidden">
+        <div class="emojis">🧸 🌹 🌷 🦋</div>
+        <div class="msg-box" id="pesanTeks"></div>
+        
+        <button id="surpriseBtn" class="btn hidden" onclick="tampilkanKejutan()">Ada Kejutan Buat Kamu 🎁</button>
+        <h2 id="surpriseText" class="hidden">I Love You Forever, Ellora ❤️</h2>
+    </div>
+
+    <script>
+        let t = 30; // Waktu countdown
+        let x = document.getElementById("timer");
+        let intervalCountdown;
+
+        // Teks pesan yang akan diketik
+        const teksPesan = "Untuk ELLORA CALLISTA ❤️\n\nSayang, maaf ya kalau aku belum bisa selalu ada di sampingmu. Tapi percayalah, sejauh apa pun jarak memisahkan kita, hatiku akan selalu memilihmu.\n\nI'll always be there for you.\n\nTerima kasih sudah hadir di hidupku dan membuat hari-hariku terasa lebih berwarna. Senyummu selalu berhasil membuatku merasa tenang, dan tawamu adalah salah satu hal yang paling ingin terus kudengar.\n\nKalau suatu saat kamu merasa lelah, sedih, atau sendirian, ingat ya... kamu nggak pernah benar-benar sendiri. Aku akan selalu mendukungmu, mendoakanmu, dan berusaha ada untukmu semampuku.\n\nAku nggak janji semuanya akan selalu mudah, tapi aku janji akan berusaha menjaga hubungan ini dengan sebaik mungkin.\n\nI love you today, tomorrow, and every day after that. ❤️\n\nForever with love, untuk ELLORA CALLISTA. 🌹";
+        
+        let indexKetik = 0;
+
+        // Fungsi saat tombol Mulai ditekan
+        function mulai() {
+            // Sembunyikan layar 1, tampilkan layar 2
+            document.getElementById('screen1').classList.add('hidden');
+            document.getElementById('screen2').classList.remove('hidden');
+            
+            // Putar musik
+            document.getElementById('bgm').play();
+            
+            // Mulai hujan hati rintik-rintik
+            setInterval(buatHati, 400);
+
+            // Menjalankan hitung mundur
+            intervalCountdown = setInterval(function() {
+                if(t > 1) {
+                    t--;
+                    x.innerHTML = t;
+                } else {
+                    // Jika waktu habis, hentikan hitungan dan ganti layar
+                    clearInterval(intervalCountdown);
+                    tampilkanPesan();
+                }
+            }, 1000); // Waktu asli 1000ms (1 detik)
+        }
+
+        // Fungsi berpindah ke halaman pesan
+        function tampilkanPesan() {
+            document.getElementById('screen2').classList.add('hidden');
+            document.getElementById('screen3').classList.remove('hidden');
+            efekKetik();
+        }
+
+        // Fungsi efek mesin ketik
+        function efekKetik() {
+            if (indexKetik < teksPesan.length) {
+                let huruf = teksPesan.charAt(indexKetik);
+                // Ubah enter menjadi baris baru HTML (<br>)
+                if(huruf === '\n') {
+                    document.getElementById("pesanTeks").innerHTML += "<br>";
+                } else {
+                    document.getElementById("pesanTeks").innerHTML += huruf;
+                }
+                
+                // Auto-scroll ke bawah saat teks bertambah panjang
+                let kotakPesan = document.getElementById("pesanTeks");
+                kotakPesan.scrollTop = kotakPesan.scrollHeight;
+
+                indexKetik++;
+                setTimeout(efekKetik, 50); // Kecepatan ngetik (ms)
+            } else {
+                // Munculkan tombol kejutan setelah teks selesai diketik
+                document.getElementById('surpriseBtn').classList.remove('hidden');
+            }
+        }
+
+        // Fungsi saat tombol kejutan ditekan
+        function tampilkanKejutan() {
+            document.getElementById('surpriseBtn').classList.add('hidden');
+            document.getElementById('surpriseText').classList.remove('hidden');
+            
+            // Hujan hati sangat deras
+            for(let i = 0; i < 50; i++) {
+                setTimeout(buatHati, i * 50);
+            }
+        }
+
+        // Fungsi membuat elemen hati jatuh
+        function buatHati() {
+            let hati = document.createElement('div');
+            hati.innerHTML = '❤️';
+            hati.className = 'heart';
+            hati.style.left = Math.random() * 100 + 'vw'; // Posisi X acak
+            hati.style.animationDuration = (Math.random() * 3 + 2) + 's'; // Kecepatan jatuh acak
+            
+            document.body.appendChild(hati);
+            
+            // Hapus dari memori setelah selesai jatuh
+            setTimeout(() => {
+                hati.remove();
+            }, 5000);
+        }
+    </script>
+</body>
+</html>
